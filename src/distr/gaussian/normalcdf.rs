@@ -1,5 +1,6 @@
 /// Calculates Cumulative Distribution Function (CDF) on a Normal/Gaussian distribution <br>
 /// Learn more about Normal Distributions at: <https://wikipedia.org/wiki/Normal_distribution#Definitions>
+/// <hr/>
 ///
 /// # Example:
 ///
@@ -14,8 +15,6 @@
 ///
 /// assert_eq!(normalcdf, 0.20227802886072038);
 /// ```
-use crate::extra::erf::{ upper_erf, lower_erf };
-
 pub fn normalcdf(lower: impl Into<f64> + Copy, upper: impl Into<f64> + Copy, mean: impl Into<f64> + Copy, sd: impl Into<f64> + Copy) -> f64 {
     let z1 = (lower.into() - mean.into()) / (sd.into() * std::f64::consts::SQRT_2);
     let z2 = (upper.into() - mean.into()) / (sd.into() * std::f64::consts::SQRT_2);
@@ -25,3 +24,5 @@ pub fn normalcdf(lower: impl Into<f64> + Copy, upper: impl Into<f64> + Copy, mea
 
     (low_erf + up_erf) / 2_f64
 }
+use crate::extra::erf::{ upper_erf, lower_erf };
+

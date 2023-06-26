@@ -2,6 +2,7 @@
 /// This is not to be confused with an Inverse Gaussian Distribution though. <br>
 /// This uses an approximation of the Inverse Error Function found at: <https://scistatcalc.blogspot.com/2013/09/numerical-estimate-of-inverse-error.html> <br>
 /// Learn more at: <https://www.statology.org/inverse-normal-distribution/>
+///<hr/>
 ///
 /// #Example #1: Right Side Non-Standard Normal Distribution
 ///
@@ -14,7 +15,7 @@
 /// let tail = "Right";
 ///
 /// let invnorm = invnorm(area, mean, sd, tail).unwrap();
-/// assert_eq!(invnorm, 39_f64);
+/// assert_eq!(invnorm, 41.187729649603824);
 /// ```
 ///
 /// #Example #2: Left Side Standard Normal Distribution
@@ -31,20 +32,13 @@
 /// assert_eq!(invnorm, 1.9599639845401289);
 /// ```
 ///
-
-use crate::extra::erfinv::inverse_error_function;
-
 pub fn invnorm<T>(area: f64, mean: impl Into<f64> + Copy, sd: impl Into<f64> + Copy, tail: T) -> Result<f64, String>
     where
         T: AsRef<str> + Copy,
 {
     let tail_str = tail.as_ref();
 
-    let function: f64 = if sd.into() != 1_f64 && mean.into() != 0_f64 {
-        area * sd.into() * std::f64::consts::SQRT_2
-    } else {
-        std::f64::consts::SQRT_2 * (inverse_error_function(-2_f64 * (area) + 1_f64))
-    };
+    let function: f64 = (std::f64::consts::SQRT_2 * sd.into()) * (inverse_error_function(-2_f64 * (area) + 1_f64));
 
     let tail_val: f64 = if tail_str == "Right" || tail_str == "right" {
         function + mean.into()
@@ -62,3 +56,5 @@ pub fn invnorm<T>(area: f64, mean: impl Into<f64> + Copy, sd: impl Into<f64> + C
 
     Ok(rounded_val)
 }
+
+use crate::extra::erfinv::inverse_error_function;

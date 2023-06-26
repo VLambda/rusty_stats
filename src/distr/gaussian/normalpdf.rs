@@ -1,5 +1,6 @@
 /// Calculates a Probability Density Function (PDF) on a Normal/Gaussian distribution <br>
 /// Learn more about Normal Distributions at: <https://wikipedia.org/wiki/Normal_distribution#Definitions>
+/// <hr/>
 ///
 /// # Example:
 ///
